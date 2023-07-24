@@ -1,8 +1,7 @@
 import os
 import streamlit as st
-import pandas as pd
 from langchain.agents import create_csv_agent
-from langchain.llms import OpenAIChat
+from langchain.chat_models import ChatOpenAI
 from loguru import logger
 
 
@@ -26,7 +25,7 @@ def main() -> None:
 
     # Create an agent using the OpenAI model and a CSV file
     api_key = os.getenv("OPENAI_API_KEY")  # Get the API key from environment variable
-    llm = OpenAIChat(openai_api_key=api_key, temperature=0.5, model="gpt-4")
+    llm = ChatOpenAI(openai_api_key=api_key, temperature=0.5, model="gpt-4")
 
     csv_file: str = "./data/places.csv"
     agent = create_csv_agent(llm, csv_file, verbose=True)
