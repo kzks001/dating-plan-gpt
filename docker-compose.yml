@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  dating_gpt_app:
+    build: 
+      context: .
+      args:
+        OPENAI_API_KEY: ${OPENAI_API_KEY}
+    ports:
+      - "8527:8501"
+    volumes:
+      - .:/app

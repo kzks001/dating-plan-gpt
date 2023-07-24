@@ -1,26 +1,39 @@
+import os
 import streamlit as st
 import pandas as pd
-from dotenv import load_dotenv
 from langchain.agents import create_csv_agent
-
-# from langchain.agents import load_tools
 from langchain.llms import OpenAI
+from loguru import logger
 
 
-def main():
-    load_dotenv("./secrets.env")
+def main() -> None:
+    """
+    Main function to run the Dating-GPT application.
 
+    This function loads environment variables, sets up the Streamlit page,
+    creates an agent using the OpenAI model and a CSV file, and generates
+    a response based on the user's input question.
+    """
+    # Load environment variables
+    # load_dotenv("./secrets.env")
+
+    # Set up Streamlit page
     st.set_page_config(page_title="Dating-GPT")
     st.header("Generate a dating plan with Dating-GPT")
 
-    user_question = st.text_input("Ask for a dating plan.")
+    # Get user input
+    user_question: str = st.text_input("Ask for a dating plan.")
 
-    llm = OpenAI(temperature=0.5)
-    csv_file = "./data/places.csv"
+    # Create an agent using the OpenAI model and a CSV file
+    api_key = os.getenv("OPENAI_API_KEY")  # Get the API key from environment variable
+    llm = OpenAI(openai_api_key=api_key, temperature=0.5)
+
+    csv_file: str = "./data/places.csv"
     agent = create_csv_agent(llm, csv_file, verbose=True)
 
+    # Generate a response if the user input is not empty
     if user_question is not None and user_question != "":
-        prompt = f"""Answer the question based on the context, and requirements below. 
+        prompt: str = f"""Answer the question based on the context, and requirements below. 
 
         context: In the context of building meaningful connections and potential romantic partnerships, 
         dating involves the process of getting to know someone better through shared experiences and interactions. 
@@ -39,7 +52,16 @@ def main():
 
         answer: """
 
+        # Log the prompt
+        logger.info(f"Prompt: {prompt}")
+
+        # Run the agent and get the response
         response = agent.run(prompt)
+
+        # Log the response
+        logger.info(f"Response: {response}")
+
+        # Write the response to the Streamlit page
         st.write(response)
 
 
