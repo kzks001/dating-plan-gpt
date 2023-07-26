@@ -32,20 +32,16 @@ def main() -> None:
 
     # Generate a response if the user input is not empty
     if user_question is not None and user_question != "":
-        prompt: str = f"""Answer the question based on the context, and requirements below. 
+        prompt: str = f"""Act as a date planner, answer the user question based on the context, and requirements below. 
 
-        context: In the context of building meaningful connections and potential romantic partnerships, 
-        dating involves the process of getting to know someone better through shared experiences and interactions. 
-        This includes spending time together, going on dates, and discovering each other's interests, values, and personality traits. 
-        Our aim is to optimize the environment for successful interactions and create opportunities for genuine connections to flourish.
+        context: Given the location's overall rating, general area, and a summary of potential dating activities derived from Google 
+        reviews, generate a creative and flexible dating plan. The plan should be adaptable to various user constraints such as time, 
+        preferences, and other specific requirements. Remember, your responses should be diverse and not limited to a fixed number of 
+        locations or repetitive suggestions. Use your creativity to provide unique and engaging dating plans for each query, even if the 
+        constraints or location are similar to previous ones. As you currently do not have the ability to remember past conversations, 
+        ensure each response is tailored to the specific query at hand.
 
-        requirements: Give 3 unique locations, one each for morning, afternoon and night. 
-        Be as detailed as possible for what to do at each location.
-        Use only the provided CSV file.
-
-        The timings are as follows: morning - 8am-12pm
-        afternoon - 12pm - 6pm
-        night 6pm-11pm
+        requirements: Use only the provided CSV file.
 
         question: {user_question}
 
