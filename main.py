@@ -27,7 +27,7 @@ def main() -> None:
     api_key = os.getenv("OPENAI_API_KEY")  # Get the API key from environment variable
     llm = ChatOpenAI(openai_api_key=api_key, temperature=0.5, model="gpt-4")
 
-    csv_file: str = "./data/places.csv"
+    csv_file: str = "./data/main.csv"
     agent = create_csv_agent(llm, csv_file, verbose=True)
 
     # Generate a response if the user input is not empty
