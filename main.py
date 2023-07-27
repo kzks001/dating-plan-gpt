@@ -13,39 +13,36 @@ def main() -> None:
     creates an agent using the OpenAI model and a CSV file, and generates
     a response based on the user's input question.
     """
-    # Load environment variables
-    # load_dotenv("./secrets.env")
-
     # Set up Streamlit page
     st.set_page_config(page_title="Dating-GPT")
     st.header("Generate a dating plan with Dating-GPT")
 
     # Get user input
-    user_question: str = st.text_input("Ask for a dating plan.")
+    user_question: str = st.text_area("Ask for a dating plan.")
 
     # Create an agent using the OpenAI model and a CSV file
     api_key = os.getenv("OPENAI_API_KEY")  # Get the API key from environment variable
     llm = ChatOpenAI(openai_api_key=api_key, temperature=0.5, model="gpt-4")
 
-    csv_file: str = "./data/main.csv"
+    csv_file: str = "main.csv"
     agent = create_csv_agent(llm, csv_file, verbose=True)
 
     # Generate a response if the user input is not empty
     if user_question is not None and user_question != "":
-        prompt: str = f"""Act as a date planner, answer the user question based on the context, and requirements below. 
+        prompt: str = f"""Act as a date planner and generate a creative and flexible dating plan based on the context and requirements provided. 
 
-        context: Given the location's overall rating, general area, and a summary of potential dating activities derived from Google 
-        reviews, generate a creative and flexible dating plan. The plan should be adaptable to various user constraints such as time, 
-        preferences, and other specific requirements. Remember, your responses should be diverse and not limited to a fixed number of 
-        locations or repetitive suggestions. Use your creativity to provide unique and engaging dating plans for each query, even if the 
-        constraints or location are similar to previous ones. As you currently do not have the ability to remember past conversations, 
-        ensure each response is tailored to the specific query at hand.
+        Context: You are given a location's summary of potential dating activities derived from Google reviews. 
 
-        requirements: Use only the provided CSV file.
+        Requirements: Your plan should be adaptable to various user constraints such as time, preferences, and other specific requirements. 
+        Ensure your responses are diverse and not limited to a fixed number of locations or repetitive suggestions. 
+        Use your creativity to provide unique and engaging dating plans for each query. 
+        Make sure the timing of the activities in the plan makes sense; for longer available hours, suggest more than one item in the plan. 
+        As you currently do not have the ability to remember past conversations, ensure each response is tailored to the specific query at hand. 
+        Do not include "overall rating" and "category" when giving the user your final answer. 
 
-        question: {user_question}
+        Question: {user_question}
 
-        answer: """
+        Answer: """
 
         # Log the prompt
         logger.info(f"Prompt: {prompt}")
