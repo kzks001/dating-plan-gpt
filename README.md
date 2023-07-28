@@ -1,5 +1,8 @@
 # Dating-GPT
 
+## TLDR
+![](images/tldr.png)
+
 ## Background
 This project aims to deliver a unique and interesting spin on dating by combining conversation potential with custom architectural design. It uses the powerful GPT-4 API by OpenAI to suggest dating plans based on the user's unique question. Imagine a dating plan that goes beyond your regular dinner and movie night - our model offers detailed plans for morning, afternoon and evening, carefully crafted to the individual's input.
 
