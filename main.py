@@ -31,9 +31,11 @@ def init_pinecone():
 
 def load_chain() -> RetrievalQA:
     """Logic for loading the chain you want to use should go here."""
-    llm = ChatOpenAI(temperature=0.5, model="gpt-4")
+    llm = ChatOpenAI(temperature=0.5, model="gpt-3.5-turbo")
     embeddings = OpenAIEmbeddings()
-    vectorstore = Pinecone.from_existing_index(index_name=INDEX_NAME, embedding=embeddings)
+    vectorstore = Pinecone.from_existing_index(
+        index_name=INDEX_NAME, embedding=embeddings
+    )
 
     prompt_template = """Act as a date planner and generate a creative and flexible dating plan based on the context and requirements provided. 
     Requirements: Your plan should be adaptable to various user constraints such as time, preferences, and other specific requirements. 
@@ -51,7 +53,9 @@ def load_chain() -> RetrievalQA:
 
     Answer: """
 
-    PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
+    PROMPT = PromptTemplate(
+        template=prompt_template, input_variables=["context", "question"]
+    )
 
     chain_type_kwargs = {"prompt": PROMPT}
     qa = RetrievalQA.from_chain_type(
