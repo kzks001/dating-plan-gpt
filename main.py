@@ -15,6 +15,7 @@ dotenv_path = "secrets.env"
 load_dotenv(dotenv_path)
 
 INDEX_NAME = "dating-plan-gpt-index"
+gpt_model = "gpt-4o-mini"
 
 st.set_page_config(page_title="DatingPlanGPT", page_icon=":robot:")
 
@@ -30,7 +31,7 @@ def init_pinecone(index_name: str):
 
 def load_chain() -> RetrievalQA:
     """Logic for loading the chain you want to use should go here."""
-    llm = ChatOpenAI(temperature=0.5, model="gpt-3.5-turbo")
+    llm = ChatOpenAI(temperature=0.5, model=gpt_model)
     embeddings = OpenAIEmbeddings()
     vectorstore = PineconeVectorStore.from_existing_index(
         index_name=INDEX_NAME, embedding=embeddings
@@ -70,7 +71,7 @@ def load_chain() -> RetrievalQA:
 
 if __name__ == "__main__":
     index = init_pinecone(INDEX_NAME)  # Initialize Pinecone client
-    chain = load_chain(index)
+    chain = load_chain()
 
     # From here down is all the StreamLit UI.
     st.header("Generate a dating plan with Dating-GPT")
