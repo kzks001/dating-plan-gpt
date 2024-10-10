@@ -14,7 +14,7 @@ DIMENSION = 1536
 
 
 def create_pinecone_index_if_not_exists(
-    pinecone, index_name: str, dimension: int = 1536
+    pinecone: Pinecone, index_name: str, dimension: int = 1536
 ):
     """Create a pinecone index if it does not exist.
 
@@ -33,7 +33,7 @@ def create_pinecone_index_if_not_exists(
         logger.info(f"Creating Index {index_name}.")
     logger.info(f"Index {index_name} already exists. Skipping index creation.")
 
-    return pc.Index(index_name)
+    return pinecone.Index(index_name)
 
 
 if __name__ == "__main__":
@@ -41,7 +41,7 @@ if __name__ == "__main__":
         api_key=os.environ.get("PINECONE_API_KEY"),  # find at app.pinecone.io
     )
     index = create_pinecone_index_if_not_exists(
-        pc, index_name=INDEX_NAME, dimension=DIMENSION
+        pinecone=pc, index_name=INDEX_NAME, dimension=DIMENSION
     )
 
     # load the data
