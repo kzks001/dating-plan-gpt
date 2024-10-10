@@ -1,13 +1,14 @@
 """Python file to serve as the frontend"""
+
 import os
 from dotenv import load_dotenv
 import streamlit as st
 from loguru import logger
-import pinecone
+from pinecone import Pinecone
 from langchain.chains import RetrievalQA
-from langchain.vectorstores import Pinecone
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.chat_models import ChatOpenAI
+from langchain_pinecone import PineconeVectorStore
+from langchain_openai import OpenAIEmbeddings
+from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
 
 dotenv_path = "secrets.env"
@@ -18,22 +19,20 @@ INDEX_NAME = "dating-plan-gpt-index"
 st.set_page_config(page_title="DatingPlanGPT", page_icon=":robot:")
 
 
-@st.cache_data
-def init_pinecone():
+@st.cache_resource
+def init_pinecone(index_name: str):
     """Initialize Pinecone client"""
     logger.info("initializing pinecone...")
-    pinecone.init(
-        api_key=os.environ.get("PINECONE_API_KEY"),  # find at app.pinecone.io
-        environment=os.environ.get("PINECONE_API_ENV"),  # next to api key in console
-    )
-    logger.info("Pinecone initialized.")
+    return Pinecone(
+        api_key=os.environ.get("PINECONE_API_KEY"),
+    ).Index(index_name)
 
 
 def load_chain() -> RetrievalQA:
     """Logic for loading the chain you want to use should go here."""
     llm = ChatOpenAI(temperature=0.5, model="gpt-3.5-turbo")
     embeddings = OpenAIEmbeddings()
-    vectorstore = Pinecone.from_existing_index(
+    vectorstore = PineconeVectorStore.from_existing_index(
         index_name=INDEX_NAME, embedding=embeddings
     )
 
@@ -70,8 +69,8 @@ def load_chain() -> RetrievalQA:
 
 
 if __name__ == "__main__":
-    init_pinecone()  # Initialize Pinecone client
-    chain = load_chain()
+    index = init_pinecone(INDEX_NAME)  # Initialize Pinecone client
+    chain = load_chain(index)
 
     # From here down is all the StreamLit UI.
     st.header("Generate a dating plan with Dating-GPT")
