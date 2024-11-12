@@ -6,11 +6,11 @@
 
 ## Background
 
-This project aims to deliver a unique and interesting spin on dating by combining conversation potential with custom architectural design. It uses the powerful GPT-4 API by OpenAI to suggest dating plans based on the user's unique question. Imagine a dating plan that goes beyond your regular dinner and movie night - our model offers detailed plans for morning, afternoon and evening, carefully crafted to the individual's input.
+This project aims to deliver a unique and interesting spin on dating by combining conversation potential with custom architectural design. It uses the gpt-4o-mini API by OpenAI to suggest dating plans based on the user's unique question. Imagine a dating plan that goes beyond your regular dinner and movie night - our model offers detailed plans for morning, afternoon and evening, carefully crafted to the individual's input.
 
-GPT-4 is the latest in OpenAI's Generative Pretrained Transformer series. Leveraging huge amounts of data and machine learning capabilities, it can generate human-like text that reads in a coherent and contextual manner. For this reason, it has vast potential in a variety of use cases - from generating creative content, intelligent virtual assistants, conversational AI, content curation, tutoring systems, code generation, and much more. This project underlines this potential by using the technology to enhance human experiences, like dating.
+Leveraging huge amounts of data and machine learning capabilities, it can generate human-like text that reads in a coherent and contextual manner. For this reason, it has vast potential in a variety of use cases - from generating creative content, intelligent virtual assistants, conversational AI, content curation, tutoring systems, code generation, and much more. This project underlines this potential by using the technology to enhance human experiences, like dating.
 
-Note that the code uses GPT-3.5 by default. GPT-4 can be enabled by defining `llm = chatopenai(temperature=0.5, model="gpt-4")`.
+Note that the code uses gpt-4o-mini by default. Other versions of GPT can be enabled by changing ```gpt_model = "gpt-4o-mini"``` in ```main.py```.
 
 ## Getting Started
 
