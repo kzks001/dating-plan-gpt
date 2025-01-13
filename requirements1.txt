@@ -1,0 +1,10 @@
+langchain-community==0.3.2
+langchain-core==0.3.10
+langchain-openai==0.2.2
+langchain-pinecone==0.2.0
+langchain==0.3.3
+loguru==0.7.0
+openai==1.51.2
+pinecone==5.3.1
+python-dotenv==1.0.0
+streamlit==1.39.0
